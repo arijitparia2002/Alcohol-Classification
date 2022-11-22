@@ -1,0 +1,29 @@
+{%extends "base.html"%} {% block body %}
+<div class="container pt-2">
+  <h1 class="text-center m-3">Predict the type of Alcohol</h1>
+
+  <!-- Main Input For Receiving Query to our ML -->
+  <form class="form-control" action="/result" method="POST">
+    {%for i in range(10)%}
+    <label for="formControlInput{{i}}" class="form-label fw-normal"
+      >Reading on {{features[i]}}</label
+    >
+    <input
+      type="number"
+      class="form-control"
+      name="{{features[i]}}"
+      id="formControlInput{{i}}"
+      step="any"
+      placeholder=""
+    />
+    {%endfor %}
+
+    <button type="submit" class="btn btn-primary btn-block btn-large mt-3">
+      Predict
+    </button>
+  </form>
+
+  <br />
+  <br />
+</div>
+{% endblock %}

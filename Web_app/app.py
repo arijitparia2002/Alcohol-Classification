@@ -1,37 +1,46 @@
 import numpy as np
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import pickle
-
+from tensorflow import keras
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+model = keras.models.load_model('model')
+sc = pickle.load(open("scaler.pkl", 'rb'))  # Standard Scaler object
+
+
+features = ["0.799_0.201", "0.799_0.201.1",	"0.700_0.300", "0.700_0.300.1",	"0.600_0.400",
+            "0.600_0.400.1", "0.501_0.499", "0.501_0.499.1", "0.400_0.600", "0.400_0.600.1"]
+catagories = ["1-Octanol", "1-Propanol",
+              "2-Butanol", "2-propanol", "1-isobutanol"]
+
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('base.html')
 
-@app.route('/predict',methods=['POST'])
-def predict():
+
+@app.route('/prediction')
+def prediction():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
 
-    output = round(prediction[0], 2)
+    return render_template('index.html', prediction_text='The Alchohol type is : {}'.format(model), features=features)
 
-    return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
 
-@app.route('/predict_api',methods=['POST'])
-def predict_api():
-    '''
-    For direct API calls trought request
-    '''
-    data = request.get_json(force=True)
-    prediction = model.predict([np.array(list(data.values()))])
+@app.route('/result', methods=['POST', 'GET'])
+def result():
+    print(f"YYY{request.method}YYY")
+    if request.method == 'POST':
+        results = request.form
+        results = dict(results)
 
-    output = prediction[0]
-    return jsonify(output)
+        inputArr = list(results.values())
+        inputArr = sc.transform([inputArr])
+        print(inputArr)
+        index = np.argmax(model.predict(inputArr), axis=-1)[0]
+        result = catagories[index]
+        return render_template("result.html", result=result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
