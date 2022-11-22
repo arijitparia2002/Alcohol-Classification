@@ -29,7 +29,6 @@ def prediction():
 
 @app.route('/result', methods=['POST', 'GET'])
 def result():
-    print(f"YYY{request.method}YYY")
     if request.method == 'POST':
         results = request.form
         results = dict(results)
