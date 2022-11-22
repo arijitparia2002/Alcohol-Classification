@@ -1,5 +1,5 @@
 import numpy as np
-from flask import Flask, jsonify, render_template, request
+from flask import Flask,render_template, request
 import pickle
 from keras.models import load_model
 app = Flask(__name__)
