@@ -1,7 +1,7 @@
 import numpy as np
 from flask import Flask, jsonify, render_template, request
 import pickle
-from tensorflow import keras
+import keras
 app = Flask(__name__)
 model = keras.models.load_model('model')
 sc = pickle.load(open("scaler.pkl", 'rb'))  # Standard Scaler object
