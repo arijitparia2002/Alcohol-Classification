@@ -24,11 +24,12 @@
           >
           </lord-icon>
         </a>
-        <h2 class="text-center m-3"><strong>Alchohol Classification</strong></h2>
+        <h4 class="m-3"><strong>Alchohol Classification</strong></h4>
       </div>
     </nav>
     {% block body %}
-    <a href="{{url_for('prediction')}}"> Go to Alchohol Predictions </a>
+    <div class="text-center container">
+      <a class="btn btn-primary mt-5" href="{{url_for('prediction')}}"> Go to Alchohol Predictions </a>
     {% endblock%}
   </body>
   <script src="https://cdn.lordicon.com/qjzruarw.js"></script>

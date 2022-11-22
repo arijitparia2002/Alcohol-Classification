@@ -1,3 +1,14 @@
 {% extends 'base.html' %} {%block body%}
-<div class="container"><p>{{result}}</p></div>
+<div class="text-center mt-5">
+  <h5>The Alchohol catagory is</h5>
+</div>
+<br />
+<div class="d-flex gap-5 justify-content-center">
+  <ul
+    class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px"
+  >
+    <li><strong>{{result}}</strong></li>
+  </ul>
+</div>
+
 {% endblock %}

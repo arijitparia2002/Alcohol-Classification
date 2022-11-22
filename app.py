@@ -1,9 +1,9 @@
 import numpy as np
 from flask import Flask, jsonify, render_template, request
 import pickle
-import keras
+from keras.models import load_model
 app = Flask(__name__)
-model = keras.models.load_model('model')
+model = load_model('model.h5')
 sc = pickle.load(open("scaler.pkl", 'rb'))  # Standard Scaler object
 
 
