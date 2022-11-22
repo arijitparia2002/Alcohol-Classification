@@ -1,0 +1,4 @@
+numpy==1.19.5
+flask==1.1.2
+pickle
+tensorflow==2.6.0
