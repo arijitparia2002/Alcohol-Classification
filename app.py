@@ -5,6 +5,7 @@ from keras.models import load_model
 app = Flask(__name__)
 model = load_model('model.h5')
 sc = pickle.load(open("scaler.pkl", 'rb'))  # Standard Scaler object
+# model2 = pickle.load(open("model.h5", 'rb'))  # Standard Scaler object
 
 
 features = ["0.799_0.201", "0.799_0.201.1",	"0.700_0.300", "0.700_0.300.1",	"0.600_0.400",
@@ -24,7 +25,7 @@ def prediction():
     For rendering results on HTML GUI
     '''
 
-    return render_template('index.html', prediction_text='The Alchohol type is : {}'.format(model), features=features)
+    return render_template('index.html', features=features)
 
 
 @app.route('/result', methods=['POST', 'GET'])
@@ -33,7 +34,7 @@ def result():
         results = request.form
         results = dict(results)
 
-        inputArr = list(results.values())
+        inputArr = list([float(v) for v in results.values()])
         inputArr = sc.transform([inputArr])
         print(inputArr)
         index = np.argmax(model.predict(inputArr), axis=-1)[0]
